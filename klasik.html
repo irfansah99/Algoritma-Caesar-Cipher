@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Caesar Cipher JS</title>
+  <style>
+    .con{
+      margin: auto;
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    background-color: burlywood;
+    padding: 5PX;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: aliceblue;
+    }
+    button{
+      width: fit-content;
+      margin: auto;
+      margin-top: 10px;
+    }
+    button
+  </style>
+</head>
+<body>
+  <div class="con">
+  <h2>Caesar Cipher</h2>
+  <input type="text" id="pesan" placeholder="Masukkan pesan">
+  <input type="number" id="kunci" placeholder="Masukkan kunci">
+
+  <button onclick="result()">Enkripsi</button>
+
+  <p><strong>Terenkripsi:</strong> <span id="terenkripsi"></span></p>
+  <p><strong>Terdekripsi:</strong> <span id="terdekripsi"></span></p>
+</div>
+  <script>
+    function CaesarEncrypt(plainteks, k) {
+      let cipherteks = '';
+      for (let i = 0; i < plainteks.length; i++) {
+        let char = plainteks[i];
+        if (char.match(/[a-z]/i)) {
+          let start = char === char.toUpperCase() ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+          let c = (char.charCodeAt(0) - start + k) % 26;
+          cipherteks += String.fromCharCode(c + start);
+        } else {
+          cipherteks += char;
+        }
+      }
+      return cipherteks;
+    }
+
+    function CaesarDecrypt(cipherteks, k) {
+      let plainteks = '';
+      for (let i = 0; i < cipherteks.length; i++) {
+        let char = cipherteks[i];
+        if (char.match(/[a-z]/i)) {
+          let start = char === char.toUpperCase() ? 'A'.charCodeAt(0) : 'a'.charCodeAt(0);
+          let p = (char.charCodeAt(0) - start - k + 26) % 26;
+          plainteks += String.fromCharCode(p + start);
+        } else {
+          plainteks += char;
+        }
+      }
+      return plainteks;
+    }
+
+    function result() {
+      const pesanInput = document.getElementById("pesan").value;
+      const kunci = parseInt(document.getElementById("kunci").value);
+
+      const terenkripsi = CaesarEncrypt(pesanInput, kunci);
+      document.getElementById("terenkripsi").textContent = terenkripsi;
+
+      const terdekripsi = CaesarDecrypt(terenkripsi, kunci);
+      document.getElementById("terdekripsi").textContent = terdekripsi;
+    }
+  </script>
+</body>
+</html>
